@@ -1,7 +1,9 @@
 package com.arun.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -10,20 +12,25 @@ public class Teacher {
 
     private long teacherID;
     private String teacherName;
-    private Set<Class> teacherClasses = new HashSet<Class>(0);
 
-    public Teacher(long teacherID, String teacherName) {
 
+    private List<Course> courses = new ArrayList<Course>();
+
+    public Teacher(long teacherID, String teacherName, List<Course> courses) {
         this.teacherID = teacherID;
         this.teacherName = teacherName;
+        this.courses = courses;
     }
+
+    public Teacher() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TEACHER_ID")
     public long getTeacherID() {
-        return this.teacherID;
+        return teacherID;
     }
+
 
     public void setTeacherID(long teacherID) {
         this.teacherID = teacherID;
@@ -31,23 +38,19 @@ public class Teacher {
 
     @Column(name = "TEACHER_NAME", nullable = false, length = 100)
     public String getTeacherName() {
-        return this.teacherName;
+        return teacherName;
     }
 
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
     }
 
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "TEACHER_CLASSES",
-            joinColumns = { @JoinColumn(name = "TEACHER_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "CLASS_ID") })
-    public Set<Class> getTeacherClasses() {
-        return this.teacherClasses;
+    @OneToMany(mappedBy="teacher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public List<Course> getCourses() {
+        return courses;
     }
 
-    public void setTeacherClasses(Set<Class> teacherClasses) {
-        this.teacherClasses = teacherClasses;
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }

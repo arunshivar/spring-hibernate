@@ -11,16 +11,14 @@ public class Address implements Serializable {
     private String street;
     private String city;
     private String state;
-    private String zipcode;
 
     public Address() {
     }
 
-    public Address(String street, String city, String state, String zipcode) {
+    public Address(String street, String city, String state) {
         this.street = street;
         this.city = city;
         this.state = state;
-        this.zipcode = zipcode;
     }
 
     @Id
@@ -59,15 +57,6 @@ public class Address implements Serializable {
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    @Column(name = "ADDRESS_ZIPCODE", nullable = false, length=10)
-    public String getZipcode() {
-        return this.zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
     }
 
 }
